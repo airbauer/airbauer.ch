@@ -26,15 +26,20 @@
 			Hey there, I'm Vik! :] I'm a <Tooltip tip={age}
 				><span>{Math.floor(Number(age))}</span></Tooltip
 			>
-			year old programmer and gamer based in Germany. I’ve taken Linux and programming seriously since
-			<span>2019</span>, and have been doodling silly around since <span>2020</span>.
+			year old programmer and gamer based in Germany 🇩🇪. I’ve taken programming seriously since
+			<span>2019</span>, and have been doodling around with linux since <span>2022</span>.
 			Recently, however, I’ve grown a knack for FOSS/FLOSS. I like contributing to
-			<Tooltip tip="🤓">
-				<a href="https://github.com/airbauer" target="_blank" rel="noreferrer">
-					<span>open source</span>
+			<Tooltip tip="🛠️">
+				<a href="https://codeberg.org/airbauer" target="_blank" rel="noreferrer">
+					<span>Forgejo/Codeberg</span>
 				</a>
 			</Tooltip>
-			as my primary mirror for my Codeberg account.
+			and if i need to i also use 
+			<Tooltip tip="🚫">
+				<a href="https://github.com/airbauer" target="_blank" rel="noreferrer">
+					<span>Github</span>
+				</a>
+			</Tooltip>.
 		</p>
 	</div>
 </section>
