@@ -30,7 +30,7 @@
 					/></svg
 				>
 			</Nav>
-			<Nav href="#work" section="work" isSelected={ y > 675 && y < 900}>
+			<Nav href="#work" section="work" isSelected={ y > 675 && y < 1000}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="24"
