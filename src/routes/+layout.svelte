@@ -3,7 +3,10 @@
 	import '../styles/global.scss';
 	import '../styles/fonts.scss';
 	import Cursor from '../components/atoms/Cursor.svelte';
-	import { inject } from '@vercel/analytics'
+	import { dev } from '$app/environment';
+    import { inject } from '@vercel/analytics';
+
+	inject({ mode: dev ? 'development' : 'production' });
 
 	let loading = true;
 	let playSFX: (() => void) | undefined;
