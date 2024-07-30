@@ -29,6 +29,7 @@
 - Vite
 - TypeScript
 - LanyardAPI
+- Vercel Toolbar and Analytics
  
 <h2 id="started">🚀 Getting started</h2>
 
