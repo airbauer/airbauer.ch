@@ -20,7 +20,7 @@
 
 <p align="center">
 
-<img src="https://i.imgur.com/0ILG4FC.jpeg" alt="Random Image" width="400px">
+<img src="https://i.imgur.com/VG3Y0sX.jpeg" alt="Random Image" width="400px">
 </p>
  
 <h2 id="technologies">💻 Technologies</h2>
