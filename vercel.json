@@ -1,0 +1,22 @@
+{
+	"$schema": "https://openapi.vercel.sh/vercel.json",
+	"version": 2,
+	"alias": "airbauer.ch",
+	"cleanUrls": true,
+	"public": true,
+	"regions": ["lhr1"],
+	"redirects": [
+		{ "source": "/cv", "destination": "https://read.cv/airbauer" },
+		{ "source": "/github", "destination": "https://github.com/airbauer" },
+		{ "source": "/resume", "destination": "https://read.cv/airbauer" },
+		{ "source": "/twitter", "destination": "https://twitter.com/real_airbauer" },
+		{ "source": "/keybase", "destination": "https://keybase.com/airbauer" },
+		{ "source": "/discord", "destination": "https://discord.com/users/549207539544227846" },
+		{ "source": "/pgp", "destination": "https://keyoxide.org/hkp/cdc2eef0d57acee83aa686f2dd90f5053a5dca4c" },
+        { "source": "/keyoxide", "destination": "https://keyoxide/hkp/cdc2eef0d57acee83aa686f2dd90f5053a5dca4c"},	
+		{
+			"source": "/contact",
+			"destination": "mailto:airbauer@proton.me"
+		}
+	]
+}
