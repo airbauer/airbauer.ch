@@ -7,7 +7,7 @@
 <footer class="wrapper">
 	<Socials />
 	<a href="https://icp.gov.moe/?keyword=20247968" target="_blank">
-		<img src="/static/icon120.png" alt="Footer image" class="footer-image" />
+		<img src="/icon400.png"  class="footer-image" />
 		萌ICP备20247968号
 	</a>
 	<h6>
@@ -65,10 +65,11 @@
 	}
 
 	.footer-image {
-		height: 1em;
-		width: auto;
-		vertical-align: middle;
-	}
+    height: 1.5em; /* Increased from 1em to 1.5em */
+    width: auto;
+    vertical-align: middle;
+    margin-right: 0.3em; /* Added to give some space between the image and text */
+}
 
 	footer {
 		padding-bottom: 2.4rem;
