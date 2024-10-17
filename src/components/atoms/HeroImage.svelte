@@ -23,7 +23,7 @@
 		on:mouseleave={leaveRotate3D}
 		class="img"
 		role="img"
-		style:background-image="url(/default.webp)"
+		style:background-image="url(/homer161.webp)"
 		style:transform="perspective(500px) {zoom ? 'scale(1.05)' : ''} rotateX({xRotation}deg) rotateY({yRotation}deg)"
 	/>
 </div>
