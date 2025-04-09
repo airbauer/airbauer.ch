@@ -4,7 +4,7 @@
 	import Socials from '../molecules/Socials.svelte';
 
 	function handleClick() {
-		const el = document.querySelector('#work');
+		const el = document.querySelector('#code');
 		if (!el) return;
 		el.scrollIntoView(true);
 	}
