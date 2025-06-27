@@ -78,7 +78,7 @@
 </section>
 
 <style lang="scss">
-	@import '../../styles/mixins.scss';
+	@use '../../styles/mixins.scss' as *;
 
 	.title {
 		display: flex;
@@ -198,17 +198,29 @@
 		height: 11px;
 		width: 11px;
 		border-radius: 50%;
-		display: inline-block;
+	}
+
+	.info-container {
+		display: flex;
+		gap: 1rem;
+		align-items: center;
 	}
 
 	.info {
 		display: flex;
-		gap: 0.2rem;
 		align-items: center;
+		gap: 0.3rem;
+	}
 
-		&-container {
-			display: flex;
-			gap: 0.9rem;
-		}
+	h3 {
+		margin-top: 0;
+		margin-bottom: 0.5rem;
+	}
+
+	h6 {
+		margin: 0;
+		font-size: 0.8rem;
+		color: var(--text-secondary);
+		font-weight: 400;
 	}
 </style>

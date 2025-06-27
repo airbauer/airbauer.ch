@@ -5,4 +5,4 @@ class DiscordUser {
   ) {}
 }
 
-export let user = new DiscordUser("airbauer", "549207539544227846");
+export const user = new DiscordUser("airbauer", "549207539544227846");

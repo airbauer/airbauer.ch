@@ -23,7 +23,7 @@
 </section>
 
 <style lang="scss">
-	@import '../../styles/mixins.scss';
+	@use '../../styles/mixins.scss' as *;
 
 	section {
 		scroll-margin-top: 20rem;

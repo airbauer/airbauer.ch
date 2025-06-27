@@ -26,9 +26,9 @@
 			Hey there, I'm Vik! :] I'm a <Tooltip tip={age}
 				><span>{Math.floor(Number(age))}</span></Tooltip
 			>
-			year old programmer and gamer based in Germany 🇩🇪. I’ve taken programming seriously since
+			year old programmer and gamer based in Germany 🇩🇪. I've taken programming seriously since
 			<span>2019</span>, and have been doodling around with linux since <span>2022</span>.
-			Recently, however, I’ve grown a knack for FOSS/FLOSS. I like contributing to
+			Recently, however, I've grown a knack for FOSS/FLOSS. I like contributing to
 			<Tooltip tip="🛠️">
 				<a href="https://codeberg.org/airbauer" target="_blank" rel="noreferrer">
 					<span>Forgejo/Codeberg</span>
@@ -45,7 +45,7 @@
 </section>
 
 <style lang="scss">
-	@import '../../styles/mixins.scss';
+	@use '../../styles/mixins.scss' as *;
 
 	section {
 		margin-bottom: 6rem;

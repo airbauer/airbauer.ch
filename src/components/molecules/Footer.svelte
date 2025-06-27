@@ -7,7 +7,7 @@
 <footer class="wrapper">
 	<Socials />
 	<a href="https://icp.gov.moe/?keyword=20247968" target="_blank">
-		<img src="/icon400.png"  class="footer-image" />
+		<img src="/icon400.png" class="footer-image" alt="ICP备案图标" />
 		萌ICP备20247968号
 	</a>
 	<h6>
@@ -65,21 +65,10 @@
 	}
 
 	.footer-image {
-    height: 1.5em; /* Increased from 1em to 1.5em */
-    width: auto;
-    vertical-align: middle;
-    margin-right: 0.3em; /* Added to give some space between the image and text */
-}
-
-	footer {
-		padding-bottom: 2.4rem;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-
-		@media screen and (max-width: 768px) {
-			flex-direction: column;
-		}
+		height: 1.5em;
+		width: auto;
+		vertical-align: middle;
+		margin-right: 0.3em;
 	}
 
 	h6 {
@@ -96,23 +85,5 @@
 		width: fit-content;
 		margin-left: 1rem;
 		margin-right: 0.4rem;
-	}
-
-	a {
-		transition: 0.3s var(--bezier-one);
-		font-family: var(--font-two);
-		text-decoration: none;
-		color: var(--text-secondary);
-		font-size: 0.9rem;
-		border-radius: 7px;
-		padding: 0.15rem 0.5rem 0.15rem;
-
-		&:hover {
-			font-weight: 400;
-			background-color: var(--accent);
-			color: var(--elevation-one);
-			border-radius: 7px;
-			width: fit-content;
-		}
 	}
 </style>
