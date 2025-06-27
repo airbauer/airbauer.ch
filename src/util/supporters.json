@@ -1,13 +1,12 @@
 [
-    {
-        "name": "MrHistories",
-        "icon": "/supporters/43eefe4631dadf9c64363468990ed5c8.webp",
-        "message":
-            ":3"
-    },
-    {
-        "name": "Khijsu",
-        "icon": "/supporters/11960c207da566be1d46adf2e718bca5.webp",
-        "message": "hi"
-    }
+  {
+    "name": "MrHistories",
+    "icon": "/supporters/43eefe4631dadf9c64363468990ed5c8.webp",
+    "message": ":3"
+  },
+  {
+    "name": "Khijsu",
+    "icon": "/supporters/11960c207da566be1d46adf2e718bca5.webp",
+    "message": "hi"
+  }
 ]

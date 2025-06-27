@@ -1,5 +1,3 @@
-                  
- 
 <h1 align="center" style="font-weight: bold;">airbauer.ch 💻</h1>
 
 <p align="center">
@@ -8,9 +6,7 @@
 <a href="#contribute">Contribute</a> 
 </p>
 
-
 <p align="center">My Personal Website</p>
-
 
 <p align="center">
 <a href="https://github.com/airbauer/airbauer.ch">📱 Visit this Project</a>
@@ -30,18 +26,18 @@
 - TypeScript
 - LanyardAPI
 - Vercel Toolbar and Analytics
- 
+
 <h2 id="started">🚀 Getting started</h2>
 
 Run the project locally
- 
+
 <h3>Prerequisites</h3>
 
-Here you list all prerequisites necessary for running my project. 
+Here you list all prerequisites necessary for running my project.
 
 - [NodeJS](https://github.com/)
 - [Git 2](https://github.com)
- 
+
 <h3>Cloning</h3>
 
 Open Terminal and Clone this Repo
@@ -49,7 +45,7 @@ Open Terminal and Clone this Repo
 ```bash
 git clone https://github.com/airbauer/airbauer.ch.git
 ```
- 
+
 <h3>Starting</h3>
 
 Now go in the Project folder and install all dependecies.
@@ -58,7 +54,7 @@ Now go in the Project folder and install all dependecies.
 cd airbauer.ch
 npm install
 ```
- 
+
 <h2 id="colab">🤝 Collaborators</h2>
 
 <p>Special thank you for all people that contributed for this project.</p>
@@ -73,7 +69,7 @@ Feel free to Contribute to this Project
 2. `git checkout -b feature/NAME`
 3. Follow commit patterns
 4. Open a Pull Request explaining the problem solved or feature made, if exists, append screenshot of visual modifications and wait for the review!
- 
+
 <h3>Documentations that might help</h3>
 
 [📝 How to create a Pull Request](https://www.atlassian.com/br/git/tutorials/making-a-pull-request)
