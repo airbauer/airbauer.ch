@@ -50,10 +50,10 @@ export interface DiscordUser {
   username: string;
   public_flags: number;
   id: string;
-  display_name: any;
+  display_name: string | null;
   discriminator: string;
   bot: boolean;
-  avatar_decoration: any;
+  avatar_decoration: string | null;
   avatar: string;
 }
 
@@ -97,5 +97,5 @@ export interface Repo {
   language: string;
   languageColor: string;
   stars: string;
-  forks: any;
+  forks: string | number;
 }
