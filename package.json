@@ -19,7 +19,7 @@
     "@types/cookie": "^0.6.0",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
-    "eslint": "^8.57.1",
+    "eslint": "^9.29.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-css": "^0.11.0",
     "eslint-plugin-jsonc": "^2.20.1",
