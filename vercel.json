@@ -5,11 +5,8 @@
   "cleanUrls": true,
   "public": true,
   "regions": ["lhr1"],
-  "functions": {
-    "src/routes/**/*.ts": {
-      "maxDuration": 10
-    }
-  },
+  "buildCommand": "npm run build",
+  "outputDirectory": ".svelte-kit/output",
   "headers": [
     {
       "source": "/(.*)",
