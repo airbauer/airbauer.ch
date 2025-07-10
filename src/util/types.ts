@@ -30,20 +30,6 @@ export interface Data {
   active_on_discord_desktop: boolean;
 }
 
-export interface Spotify {
-  track_id: string;
-  timestamps: Timestamps;
-  song: string;
-  artist: string;
-  album_art_url: string;
-  album: string;
-}
-
-export interface Timestamps {
-  start: number;
-  end: number;
-}
-
 export interface Kv {}
 
 export interface DiscordUser {

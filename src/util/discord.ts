@@ -1,7 +1,7 @@
 class DiscordUser {
   constructor(
     public username: string,
-    public id: string,
+    public id: string
   ) {}
 }
 
