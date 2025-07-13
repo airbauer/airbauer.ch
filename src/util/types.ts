@@ -30,7 +30,7 @@ export interface Data {
   active_on_discord_desktop: boolean;
 }
 
-export interface Kv {}
+export type Kv = Record<string, unknown>;
 
 export interface DiscordUser {
   username: string;
