@@ -1,5 +1,5 @@
-@import "theme.light.scss" (prefers-color-scheme: light);
-@import "theme.dark.scss" (prefers-color-scheme: dark);
+@import url(theme.light.scss) (prefers-color-scheme: light);
+@import url(theme.dark.scss) (prefers-color-scheme: dark);
 
 * {
   box-sizing: inherit;
@@ -63,6 +63,7 @@ h1 {
   color: var(--text-primary);
   font-weight: 600;
   letter-spacing: -0.075em;
+  line-height: 0.05rem;
   line-height: 101.6%;
   font-size: 6rem;
 }

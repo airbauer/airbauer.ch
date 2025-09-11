@@ -6,7 +6,7 @@
   import { DiscordIcon } from "@indaco/svelte-iconoir/discord";
   import { MailIcon } from "@indaco/svelte-iconoir/mail";
   import { CoffeeCupIcon } from "@indaco/svelte-iconoir/coffee-cup";
-  import { KeyIcon } from "@indaco/svelte-iconoir/key";
+  import { OpenInBrowserIcon } from "@indaco/svelte-iconoir/open-in-browser";
 </script>
 
 <div class="socials-container">
@@ -30,7 +30,7 @@
     tip="PGP"
     link="https://keyoxide.org/hkp/cdc2eef0d57acee83aa686f2dd90f5053a5dca4c"
   >
-    <KeyIcon color="var(--accent)" />
+    <OpenInBrowserIcon color="var(--accent)" />
   </Social>
 </div>
 

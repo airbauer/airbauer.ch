@@ -55,38 +55,6 @@ cd airbauer.ch
 npm install
 ```
 
-<h3>Scripts</h3>
-
-```bash
-# Type- & Svelte-Checks
-npm run check
-
-# Format mit Prettier
-npm run format
-
-# Lint (Prettier, ESLint, Stylelint)
-npm run lint
-
-# Build (Prod)
-npm run build
-
-# Preview (lokal, Prod-Bundle)
-npm run preview
-```
-
-<h3>Bundle-Analyse</h3>
-
-```bash
-# öffnet bundle-report.html nach dem Build
-ANALYZE=true npm run build
-```
-
-<h3>Deployment</h3>
-
-- Adapter: `@sveltejs/adapter-vercel` (Runtime Node.js 20)
-- Vercel-Config: `vercel.json` (Security-Header inkl. CSP)
-- Statische Assets: `static/` (werden mit Cache-Headern ausgeliefert)
-
 <h2 id="colab">🤝 Collaborators</h2>
 
 <p>Special thank you for all people that contributed for this project.</p>
