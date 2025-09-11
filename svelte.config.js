@@ -8,7 +8,7 @@ const config = {
   preprocess: preprocess(),
 
   kit: {
-    adapter: vercel(),
+    adapter: vercel({ runtime: "nodejs20.x" }),
   },
 };
 

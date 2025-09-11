@@ -60,5 +60,13 @@
       "destination": "https://keyoxide/hkp/cdc2eef0d57acee83aa686f2dd90f5053a5dca4c"
     },
     { "source": "/contact", "destination": "mailto:airbauer@proton.me" }
-  ]
+  ],
+  "functions": {
+    "api/**": {
+      "runtime": "nodejs20.x"
+    },
+    "**": {
+      "runtime": "nodejs20.x"
+    }
+  }
 }
