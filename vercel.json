@@ -11,17 +11,20 @@
     {
       "source": "/(.*)",
       "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" },
         {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
         },
         {
-          "key": "X-Frame-Options",
-          "value": "DENY"
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), interest-cohort=(), browsing-topics=()"
         },
         {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; base-uri 'self'; frame-ancestors 'none'; img-src 'self' data: blob: https:; media-src 'self' data:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' https://vitals.vercel-insights.com https://cdn.vercel-insights.com; connect-src 'self' https://vitals.vercel-insights.com https://cdn.vercel-insights.com;"
         }
       ]
     },
@@ -36,6 +39,7 @@
     }
   ],
   "redirects": [
+    { "source": "/apple-touch-icon-precomposed.png", "destination": "/apple-touch-icon.png" },
     { "source": "/cv", "destination": "https://read.cv/airbauer" },
     { "source": "/github", "destination": "https://github.com/airbauer" },
     { "source": "/resume", "destination": "https://read.cv/airbauer" },
@@ -56,9 +60,6 @@
       "source": "/keyoxide",
       "destination": "https://keyoxide/hkp/cdc2eef0d57acee83aa686f2dd90f5053a5dca4c"
     },
-    {
-      "source": "/contact",
-      "destination": "mailto:airbauer@proton.me"
-    }
+    { "source": "/contact", "destination": "mailto:airbauer@proton.me" }
   ]
 }

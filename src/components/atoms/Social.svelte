@@ -7,7 +7,12 @@
 
 <Tooltip {tip}>
   <div>
-    <a href={link} target="_blank" rel="noreferrer">
+    <a
+      href={link}
+      target="_blank"
+      rel="noreferrer external"
+      data-sveltekit-preload-data
+    >
       <slot />
     </a>
   </div>

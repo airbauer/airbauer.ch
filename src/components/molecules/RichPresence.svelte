@@ -167,7 +167,12 @@
   {/if}
   <div>
     {#if isSpotify}
-      <a href={songLink} target="_blank" rel="noreferrer">
+      <a
+        href={songLink}
+        target="_blank"
+        rel="noreferrer external"
+        data-sveltekit-preload-data
+      >
         <Tooltip tip="Open Spotify">
           <h3>{activity}</h3>
         </Tooltip>
