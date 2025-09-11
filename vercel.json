@@ -6,7 +6,6 @@
   "public": true,
   "regions": ["lhr1"],
   "buildCommand": "npm run build",
-  "outputDirectory": ".svelte-kit/output",
   "headers": [
     {
       "source": "/(.*)",
