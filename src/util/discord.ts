@@ -1,8 +1,9 @@
-class DiscordUser {
-  constructor(
-    public username: string,
-    public id: string
-  ) {}
+export interface DiscordUser {
+  username: string;
+  id: string;
 }
 
-export const user = new DiscordUser("airbauer", "549207539544227846");
+export const user: DiscordUser = {
+  username: "airbauer",
+  id: "549207539544227846",
+};

@@ -9,3 +9,7 @@ dist
 .DS_Store
 *.log
 bundle-report.html
+.vercel
+.svelte-kit
+node_modules
+.env

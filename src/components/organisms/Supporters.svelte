@@ -9,7 +9,7 @@
   </div>
 
   <div class="supporters">
-    {#each supporters as { name, icon, message }}
+    {#each supporters as { name, icon } (name)}
       <div class="supporter">
         <img src={icon} alt={name} />
         <h6>{name}</h6>
