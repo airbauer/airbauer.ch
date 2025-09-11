@@ -20,28 +20,22 @@
     // need to create our own audio context as the default Audio() pauses any music playing
     let buffer: AudioBuffer;
     const audioCtx = new window.AudioContext();
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    const isMuted = localStorage.getItem("sound-muted") === "true";
-
-    fetch("/sounds/click.ogg")
-      .then(res => res.arrayBuffer())
-      .then(audioData => audioCtx.decodeAudioData(audioData))
-      .then(decoded => {
-        buffer = decoded;
+    const request = new XMLHttpRequest();
+    request.open("GET", "sounds/click.ogg", true);
+    request.responseType = "arraybuffer";
+    request.onload = function () {
+      const audioData: ArrayBuffer = request.response;
+      audioCtx.decodeAudioData(audioData, function (decodedBuffer) {
+        buffer = decodedBuffer;
         playSFX = () => {
-          if (prefersReducedMotion || isMuted) return;
-          if (audioCtx.state === "suspended") void audioCtx.resume();
           const source = audioCtx.createBufferSource();
           source.buffer = buffer;
           source.connect(audioCtx.destination);
           source.start(0);
         };
-      })
-      .catch(() => {
-        // ignore audio init errors
       });
+    };
+    request.send();
 
     if (document.readyState === "complete") {
       loading = false;
@@ -49,18 +43,18 @@
 
     const classes = document.querySelector("body")?.classList;
     const stopResizeAnimation = () => {
-      let resizeTimer: number | null = null;
+      let timer: any = 0;
       window.addEventListener("resize", function () {
-        if (resizeTimer !== null) {
-          clearTimeout(resizeTimer);
-          resizeTimer = null;
+        if (timer) {
+          clearTimeout(timer);
+          timer = null;
         } else {
           classes?.add("stop-transitions");
         }
 
-        resizeTimer = window.setTimeout(() => {
+        timer = setTimeout(() => {
           classes?.remove("stop-transitions");
-          resizeTimer = null;
+          timer = null;
         }, 100);
       });
     };
@@ -75,10 +69,10 @@
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="airbauer – Personal Website" />
+  <meta property="og:title" content="Vik's Personal Website" />
   <meta
     property="og:description"
-    content="Hey, ich bin airbauer – Entwickler und Gamer aus Deutschland."
+    content="Hey there, I'm Vik! :] I'm a 17 year old programmer and gamer based in Germany 🇩🇪. I've taken programming seriously since 2019, and have been doodling around with linux since 2022. Recently, however, I've grown a knack for FOSS/FLOSS."
   />
   <meta property="og:url" content="https://airbauer.ch" />
   <meta
@@ -90,10 +84,10 @@
 
   <!-- Twitter/X -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="airbauer – Personal Website" />
+  <meta name="twitter:title" content="Vik's Personal Website" />
   <meta
     name="twitter:description"
-    content="Hey, ich bin airbauer – Entwickler und Gamer aus Deutschland."
+    content="Hey there, I'm Vik! :] I'm a 17 year old programmer and gamer based in Germany 🇩🇪. I've taken programming seriously since 2019, and have been doodling around with linux since 2022. Recently, however, I've grown a knack for FOSS/FLOSS."
   />
   <meta
     name="twitter:image"
@@ -104,14 +98,10 @@
 
   <!-- Other Meta Tags -->
   <meta name="theme-color" content="#CCE2F2" />
-  <title>airbauer – Personal Website</title>
+  <title>Vik's Personal Website</title>
 </svelte:head>
 
-<svelte:window
-  on:click={() => {
-    playSFX?.();
-  }}
-/>
+<svelte:window on:click={playSFX} />
 
 <Cursor />
 <span class:loading>

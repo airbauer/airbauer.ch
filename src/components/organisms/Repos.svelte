@@ -30,13 +30,8 @@
   </div>
   <div class="grid">
     {#if repos}
-      {#each repos as { link, owner, repo, description, languageColor, language, stars, forks } (link)}
-        <a
-          href={link}
-          target="_blank"
-          rel="noreferrer external"
-          data-sveltekit-preload-data
-        >
+      {#each repos as { link, owner, repo, description, languageColor, language, stars, forks }}
+        <a href={link} target="_blank" rel="noreferrer">
           <div class="repo-card">
             <div id="top-part">
               <div class="info">
@@ -78,7 +73,7 @@
         </a>
       {/each}
     {:else}
-      {#each Array.from({ length: 4 }, (_, i) => i) as index (index)}
+      {#each Array(4) as _}
         <div class="repo-card shimmer"></div>
       {/each}
     {/if}
