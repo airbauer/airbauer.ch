@@ -22,7 +22,7 @@ export default [
       prettier: prettierPlugin,
     },
     rules: {
-      ...tsPlugin.configs["recommended"].rules,
+      ...tsPlugin.configs.recommended.rules,
       "prefer-const": "error",
       "@typescript-eslint/no-explicit-any": "warn",
       "prettier/prettier": "error",
