@@ -13,7 +13,7 @@
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write"
   },
   "devDependencies": {
-    "@sveltejs/adapter-auto": "^6.0.1",
+    "@sveltejs/adapter-auto": "^7.0.0",
     "@sveltejs/kit": "^2.22.5",
     "@sveltejs/vite-plugin-svelte": "^6.0.0",
     "@typescript-eslint/eslint-plugin": "^8.36.0",
