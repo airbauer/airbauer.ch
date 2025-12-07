@@ -1,12 +1,19 @@
-<script>
+<script lang="ts">
   import HeroImage from "../../components/atoms/HeroImage.svelte";
   import Button from "../atoms/Button.svelte";
   import Socials from "../molecules/Socials.svelte";
 
-  function handleClick() {
+  function handleClick(): void {
     const el = document.querySelector("#code");
     if (!el) return;
-    el.scrollIntoView(true);
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function handleKeyPress(event: KeyboardEvent): void {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      handleClick();
+    }
   }
 </script>
 
@@ -17,7 +24,7 @@
     <div class="socials">
       <Socials />
     </div>
-    <Button side on:click={handleClick} on:keypress={handleClick}
+    <Button side on:click={handleClick} on:keypress={handleKeyPress}
       >Discover my work ↓</Button
     >
   </div>

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { onMount, onDestroy } from "svelte";
   import Tooltip from "../atoms/Tooltip.svelte";
 
   import { user } from "../../util/discord";
@@ -18,9 +18,11 @@
     progress: number,
     elapsed: string,
     spotifyTotal: number,
-    currentSetInterval: ReturnType<typeof setInterval>,
-    currentRequestAnimationFrame: number;
-  // hasStatus = false,
+    currentSetInterval: ReturnType<typeof setInterval> | null = null,
+    currentRequestAnimationFrame: number | null = null,
+    heartbeatInterval: ReturnType<typeof setInterval> | null = null,
+    reconnectTimeout: ReturnType<typeof setTimeout> | null = null;
+  let lanyard: WebSocket | null = null;
 
   const images: { [key: string]: string } = {
     "CLIP STUDIO PAINT": "https://i.imgur.com/IUVs3RB.png",
@@ -40,33 +42,57 @@
   }
 
   function elapsedTime(timestampStart: number) {
-    let elapsedMs = new Date().getTime() - timestampStart;
-    // shrimple but hacky way of getting time from ms
+    const elapsedMs = new Date().getTime() - timestampStart;
     elapsed = new Date(elapsedMs).toISOString().slice(11, 19) + " elapsed";
     if (elapsed.slice(0, 2) === "00") {
       elapsed = elapsed.slice(-13);
     }
   }
 
-  // can't use requestAnimationFrame outside of onMount since its part of the window object
-  // need to use currentSetInterval at the beginning since the clock needs to be there before we connect to Lanyard
-  localTime();
-  currentSetInterval = setInterval(() => localTime(), 1000);
+  function cleanup() {
+    if (currentSetInterval) {
+      clearInterval(currentSetInterval);
+      currentSetInterval = null;
+    }
+    if (currentRequestAnimationFrame !== null) {
+      cancelAnimationFrame(currentRequestAnimationFrame);
+      currentRequestAnimationFrame = null;
+    }
+    if (heartbeatInterval) {
+      clearInterval(heartbeatInterval);
+      heartbeatInterval = null;
+    }
+    if (reconnectTimeout) {
+      clearTimeout(reconnectTimeout);
+      reconnectTimeout = null;
+    }
+    if (lanyard) {
+      lanyard.close();
+      lanyard = null;
+    }
+  }
 
   onMount(() => {
+    // Initialize clock before connecting to Lanyard
+    localTime();
+    currentSetInterval = setInterval(() => localTime(), 1000);
+
     function connect() {
-      clearInterval(currentSetInterval); // don't need this anymore
-      let lanyard: WebSocket = new WebSocket("wss://api.lanyard.rest/socket");
+      if (currentSetInterval) {
+        clearInterval(currentSetInterval);
+        currentSetInterval = null;
+      }
+      lanyard = new WebSocket("wss://api.lanyard.rest/socket");
       lanyard.onopen = () => console.log("Synced with Discord rich presence!");
 
-      lanyard.onmessage = e => {
-        let json = JSON.parse(e.data);
-        let opcode = json.op;
-        let data = json.d;
+      lanyard.onmessage = (e) => {
+        const json = JSON.parse(e.data);
+        const opcode = json.op;
+        const data = json.d;
 
         if (opcode === 1) {
           pulse = data.heartbeat_interval;
-          lanyard.send(
+          lanyard?.send(
             JSON.stringify({
               op: 2,
               d: { subscribe_to_id: user.id },
@@ -76,34 +102,29 @@
 
         // requestAnimationFrame is much more performant than setTimeout
         function tick() {
-          if (isSpotify) musicProgress(data.spotify);
-          else if (isActivity)
+          if (!lanyard) return;
+          if (isSpotify && data.spotify) musicProgress(data.spotify);
+          else if (isActivity && data.activities?.[activityNumber]?.timestamps?.start)
             elapsedTime(data.activities[activityNumber].timestamps.start);
           else if (!isActivity) localTime();
           currentRequestAnimationFrame = requestAnimationFrame(tick);
         }
 
         // keep the websocket connection alive
-        setInterval(() => {
-          lanyard.send(JSON.stringify({ op: 3 }));
+        if (heartbeatInterval) {
+          clearInterval(heartbeatInterval);
+        }
+        heartbeatInterval = setInterval(() => {
+          if (lanyard && lanyard.readyState === WebSocket.OPEN) {
+            lanyard.send(JSON.stringify({ op: 3 }));
+          }
         }, pulse);
 
         if (opcode === 0) {
           isSpotify = data.listening_to_spotify;
-          isActivity = !!data.activities[0];
-          // console.log(isActivity, hasStatus);
-          // hasStatus = data.activities[0].name === 'Custom Status';
+          isActivity = !!data.activities?.[0];
 
-          // // everything is so ugly oh my god why is there so many edge cases
-          // if (hasStatus && data.activities[1].name) {
-          // 	isActivity = true;
-          // 	activityNumber = 1;
-          // } else {
-          // 	isActivity = false;
-          // 	activityNumber = 0;
-          // }
-
-          if (isSpotify) {
+          if (isSpotify && data.spotify) {
             ({
               song: activity,
               artist: details,
@@ -115,9 +136,11 @@
             state = activity === state ? "" : "on " + state; // check if the song is a single
             songLink = `https://open.spotify.com/track/${data.spotify.track_id}`;
             smallImage = "";
-            cancelAnimationFrame(currentRequestAnimationFrame);
+            if (currentRequestAnimationFrame !== null) {
+              cancelAnimationFrame(currentRequestAnimationFrame);
+            }
             tick();
-          } else if (isActivity) {
+          } else if (isActivity && data.activities?.[activityNumber]) {
             ({
               name: activity,
               details,
@@ -133,7 +156,9 @@
             ) {
               smallImage = `https://cdn.discordapp.com/app-assets/${data.activities[activityNumber].application_id}/${data.activities[activityNumber].assets.small_image}.webp?size=512`;
             }
-            cancelAnimationFrame(currentRequestAnimationFrame);
+            if (currentRequestAnimationFrame !== null) {
+              cancelAnimationFrame(currentRequestAnimationFrame);
+            }
             tick();
           } else if (!isActivity) {
             activity = `@${user.username}`;
@@ -143,31 +168,54 @@
             details = details === "Dnd" ? "Do Not Disturb" : details;
             activityImage = "hellsing.gif";
             smallImage = "";
-            cancelAnimationFrame(currentRequestAnimationFrame);
+            if (currentRequestAnimationFrame !== null) {
+              cancelAnimationFrame(currentRequestAnimationFrame);
+            }
             tick();
           }
         }
+      };
 
-        // re-open websocket connection when it closes, e.g. when switched out of tab
-        lanyard.onclose = () => {
+      // re-open websocket connection when it closes, e.g. when switched out of tab
+      lanyard.onclose = () => {
+        if (lanyard) {
           lanyard.close();
-          setTimeout(() => connect(), 2500);
-        };
+          lanyard = null;
+        }
+        reconnectTimeout = setTimeout(() => connect(), 2500);
+      };
+
+      lanyard.onerror = () => {
+        if (lanyard) {
+          lanyard.close();
+          lanyard = null;
+        }
+        reconnectTimeout = setTimeout(() => connect(), 2500);
       };
     }
     connect();
+  });
+
+  onDestroy(() => {
+    cleanup();
   });
 </script>
 
 <h2>activity</h2>
 <div class="contain">
-  <img src={activityImage} alt={activity} class="big" class:spin={isSpotify} />
+  <img
+    src={activityImage}
+    alt={`${activity} - ${details || ""}`}
+    class="big"
+    class:spin={isSpotify}
+    loading="lazy"
+  />
   {#if smallImage}
-    <img src={smallImage} alt={activity} class="small" />
+    <img src={smallImage} alt="" class="small" aria-hidden="true" loading="lazy" />
   {/if}
   <div>
     {#if isSpotify}
-      <a href={songLink} target="_blank" rel="noreferrer">
+      <a href={songLink} target="_blank" rel="noopener noreferrer">
         <Tooltip tip="Open Spotify">
           <h3>{activity}</h3>
         </Tooltip>

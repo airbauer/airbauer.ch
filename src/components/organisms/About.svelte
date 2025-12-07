@@ -1,19 +1,29 @@
-<script>
+<script lang="ts">
+  import { onMount, onDestroy } from "svelte";
   import RichPresence from "../molecules/RichPresence.svelte";
   import Tooltip from "../atoms/Tooltip.svelte";
 
-  // i didnt write this idk
-  let getAge = () => {
-    let birthDate = new Date("2007/11/24");
+  function getAge(): string {
+    const birthDate = new Date("2007/11/24");
     const ageMs = Date.now() - birthDate.getTime();
     const preciseAge = (ageMs / 31536000000).toFixed(10);
     return preciseAge;
-  };
+  }
 
   let age = getAge();
-  setInterval(() => {
-    age = getAge();
-  }, 1000);
+  let ageInterval: ReturnType<typeof setInterval>;
+
+  onMount(() => {
+    ageInterval = setInterval(() => {
+      age = getAge();
+    }, 1000);
+  });
+
+  onDestroy(() => {
+    if (ageInterval) {
+      clearInterval(ageInterval);
+    }
+  });
 </script>
 
 <section id="about" class="wrapper">
@@ -35,14 +45,14 @@
         <a
           href="https://codeberg.org/airbauer"
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
         >
           <span>Forgejo/Codeberg</span>
         </a>
       </Tooltip>
       and if i need to i also use
       <Tooltip tip="🚫">
-        <a href="https://github.com/airbauer" target="_blank" rel="noreferrer">
+        <a href="https://github.com/airbauer" target="_blank" rel="noopener noreferrer">
           <span>Github</span>
         </a>
       </Tooltip>.

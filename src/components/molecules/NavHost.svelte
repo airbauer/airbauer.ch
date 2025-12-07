@@ -13,6 +13,7 @@
           height="24"
           fill="var(--accent)"
           viewBox="0 0 24 24"
+          aria-hidden="true"
           ><path fill="none" d="M0 0h24v24H0z" /><path
             d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
           /></svg
@@ -25,6 +26,7 @@
           height="24"
           fill="var(--accent)"
           viewBox="0 0 24 24"
+          aria-hidden="true"
           ><path fill="none" d="M0 0h24v24H0z" /><path
             d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
           /></svg
@@ -37,6 +39,7 @@
           height="24"
           fill="var(--accent)"
           viewBox="0 0 24 24"
+          aria-hidden="true"
           ><path fill="none" d="M0 0h24v24H0z" /><path
             d="M14 5v14h-4V5h4m2-2h-6v18h6V3zm-2 6h-2v4h2v-4z"
           /></svg

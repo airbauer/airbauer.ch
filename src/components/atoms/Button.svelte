@@ -1,9 +1,15 @@
-<script>
+<script lang="ts">
   export let side = false;
 </script>
 
-<button on:click on:keypress class:button-with-side={side}>
-  <div class:side></div>
+<button
+  type="button"
+  class:button-with-side={side}
+  aria-label="Button"
+  on:click
+  on:keypress
+>
+  <div class:side aria-hidden="true"></div>
   <slot />
 </button>
 

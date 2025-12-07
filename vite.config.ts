@@ -5,7 +5,9 @@ import { visualizer } from "rollup-plugin-visualizer";
 const config: UserConfig = {
   plugins: [
     sveltekit(),
-    visualizer({ open: true, filename: "bundle-report.html" }),
+    ...(process.env.NODE_ENV === "development"
+      ? [visualizer({ open: true, filename: "bundle-report.html" })]
+      : []),
   ],
 };
 

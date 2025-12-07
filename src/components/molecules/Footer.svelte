@@ -6,15 +6,15 @@
 <hr />
 <footer class="wrapper">
   <Socials />
-  <a href="https://icp.gov.moe/?keyword=20247968" target="_blank">
-    <img src="/icon400.png" class="footer-image" alt="ICP备案图标" />
+  <a href="https://icp.gov.moe/?keyword=20247968" target="_blank" rel="noopener noreferrer">
+    <img src="/icon400.png" class="footer-image" alt="ICP备案图标" loading="lazy" />
     萌ICP备20247968号
   </a>
   <h6>
     Made with pain. &#60;3
     <Tooltip tip="you're here"><span>V2</span></Tooltip>
     <Tooltip tip="how to delete">
-      <a href="https://old.airbauer.ch/" target="_blank" rel="noreferrer">V1</a>
+      <a href="https://old.airbauer.ch/" target="_blank" rel="noopener noreferrer">V1</a>
     </Tooltip>
   </h6>
 </footer>

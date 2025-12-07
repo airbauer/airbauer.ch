@@ -6,21 +6,33 @@
   import { GitForkIcon } from "@indaco/svelte-iconoir/git-fork";
   import { OpenNewWindowIcon } from "@indaco/svelte-iconoir/open-new-window";
 
-  let repos: Repo[];
+  let repos: Repo[] | null = null;
+  let error: string | null = null;
 
   onMount(async () => {
-    const response = await fetch(
-      "https://gh-pinned-repos-tsj7ta5xfhep.deno.dev/?username=airbauer"
-    );
-    let unpatched = await response.json();
-    // patch repo owners having a slash at the end of them
-    for (let i = 0; i < unpatched.length; i++) {
-      const element = unpatched[i];
-      if ((element.owner as string).endsWith("/")) {
-        unpatched[i].owner = unpatched[i].owner.slice(0, -1);
+    try {
+      const response = await fetch(
+        "https://gh-pinned-repos-tsj7ta5xfhep.deno.dev/?username=airbauer"
+      );
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch repos: ${response.status} ${response.statusText}`);
       }
+
+      const unpatched: Repo[] = await response.json();
+      
+      // patch repo owners having a slash at the end of them
+      for (let i = 0; i < unpatched.length; i++) {
+        const element = unpatched[i];
+        if (element.owner && (element.owner as string).endsWith("/")) {
+          unpatched[i].owner = (element.owner as string).slice(0, -1);
+        }
+      }
+      repos = unpatched;
+    } catch (err) {
+      console.error("Error fetching repositories:", err);
+      error = err instanceof Error ? err.message : "Failed to load repositories";
     }
-    repos = unpatched;
   });
 </script>
 
@@ -29,9 +41,14 @@
     <h2><span>code</span>:work</h2>
   </div>
   <div class="grid">
-    {#if repos}
+    {#if error}
+      <div class="error-message">
+        <p>{error}</p>
+        <p>Please try again later.</p>
+      </div>
+    {:else if repos}
       {#each repos as { link, owner, repo, description, languageColor, language, stars, forks }}
-        <a href={link} target="_blank" rel="noreferrer">
+        <a href={link} target="_blank" rel="noopener noreferrer">
           <div class="repo-card">
             <div id="top-part">
               <div class="info">
@@ -39,6 +56,7 @@
                   src="https://github.com/{owner}.png"
                   alt="{owner}'s profile picture"
                   id="pfp"
+                  loading="lazy"
                 />
                 <h6>{owner}</h6>
               </div>
@@ -74,7 +92,7 @@
       {/each}
     {:else}
       {#each Array(4) as _}
-        <div class="repo-card shimmer"></div>
+        <div class="repo-card shimmer" aria-label="Loading repository"></div>
       {/each}
     {/if}
   </div>
@@ -231,5 +249,16 @@
     font-size: 0.8rem;
     color: var(--text-secondary);
     font-weight: 400;
+  }
+
+  .error-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+
+    p {
+      margin: 0.5rem 0;
+    }
   }
 </style>
