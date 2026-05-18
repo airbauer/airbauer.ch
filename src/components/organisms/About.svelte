@@ -52,7 +52,11 @@
       </Tooltip>
       and if i need to i also use
       <Tooltip tip="🚫">
-        <a href="https://github.com/airbauer" target="_blank" rel="noopener noreferrer">
+        <a
+          href="https://github.com/airbauer"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <span>Github</span>
         </a>
       </Tooltip>.

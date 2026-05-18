@@ -7,6 +7,7 @@
 
 <Tooltip {tip}>
   <div>
+    <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
     <a href={link} target="_blank" rel="noopener noreferrer">
       <slot />
     </a>

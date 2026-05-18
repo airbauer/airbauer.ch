@@ -16,22 +16,25 @@
       );
 
       if (!response.ok) {
-        throw new Error(`Failed to fetch repos: ${response.status} ${response.statusText}`);
+        throw new Error(
+          `Failed to fetch repos: ${response.status} ${response.statusText}`
+        );
       }
 
       const unpatched: Repo[] = await response.json();
-      
+
       // patch repo owners having a slash at the end of them
       for (let i = 0; i < unpatched.length; i++) {
         const element = unpatched[i];
-        if (element.owner && (element.owner as string).endsWith("/")) {
-          unpatched[i].owner = (element.owner as string).slice(0, -1);
+        if (element.owner.endsWith("/")) {
+          unpatched[i].owner = element.owner.slice(0, -1);
         }
       }
       repos = unpatched;
     } catch (err) {
       console.error("Error fetching repositories:", err);
-      error = err instanceof Error ? err.message : "Failed to load repositories";
+      error =
+        err instanceof Error ? err.message : "Failed to load repositories";
     }
   });
 </script>
@@ -47,7 +50,8 @@
         <p>Please try again later.</p>
       </div>
     {:else if repos}
-      {#each repos as { link, owner, repo, description, languageColor, language, stars, forks }}
+      {#each repos as { link, owner, repo, description, languageColor, language, stars, forks } (link)}
+        <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
         <a href={link} target="_blank" rel="noopener noreferrer">
           <div class="repo-card">
             <div id="top-part">
@@ -91,7 +95,7 @@
         </a>
       {/each}
     {:else}
-      {#each Array(4) as _}
+      {#each Array(4)}
         <div class="repo-card shimmer" aria-label="Loading repository"></div>
       {/each}
     {/if}

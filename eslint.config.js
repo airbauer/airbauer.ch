@@ -26,6 +26,11 @@ export default [
       "prefer-const": "error",
       "@typescript-eslint/no-explicit-any": "warn",
       "prettier/prettier": "error",
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
+      ],
     },
   },
   // Svelte-Empfehlungen
