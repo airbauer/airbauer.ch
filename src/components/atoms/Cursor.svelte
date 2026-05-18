@@ -42,7 +42,7 @@
     z-index: 30;
     opacity: 0;
     pointer-events: none;
-    transition: 0.3s all var(--bezier-one);
+    transition: 0.3s opacity var(--bezier-one);
 
     @media (pointer: coarse) {
       display: none;
