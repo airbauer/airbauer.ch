@@ -1,20 +1,14 @@
-export function smoothScrollTo(target: HTMLElement, duration = 500) {
-  const start = window.scrollY;
-  const targetRect = target.getBoundingClientRect();
-  const end = start + targetRect.top;
-  const startTime = performance.now();
+export function smoothScrollTo(target: HTMLElement) {
+  function tick() {
+    const remaining = target.getBoundingClientRect().top;
 
-  function tick(now: number) {
-    const elapsed = now - startTime;
-    const t = Math.min(elapsed / duration, 1);
-
-    const eased = 1 - Math.pow(1 - t, 3);
-
-    window.scrollTo(0, start + (end - start) * eased);
-
-    if (t < 1) {
-      requestAnimationFrame(tick);
+    if (Math.abs(remaining) < 1) {
+      window.scrollBy(0, remaining);
+      return;
     }
+
+    window.scrollBy(0, remaining * 0.12);
+    requestAnimationFrame(tick);
   }
 
   requestAnimationFrame(tick);
