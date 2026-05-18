@@ -1,19 +1,39 @@
 <script lang="ts">
-  let mouseX = 0;
-  let mouseY = 0;
+  let targetX = 0;
+  let targetY = 0;
+  let currentX = 0;
+  let currentY = 0;
   let opacity = 0;
   let scale = 1;
+  let raf: number | null = null;
   let timeout: ReturnType<typeof setTimeout>;
 
   function mouseMove(e: MouseEvent) {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
+    targetX = e.clientX;
+    targetY = e.clientY;
     opacity = 1;
 
     clearTimeout(timeout);
     timeout = setTimeout(() => {
       opacity = 0;
     }, 1000);
+
+    if (raf === null) {
+      raf = requestAnimationFrame(tick);
+    }
+  }
+
+  function tick() {
+    currentX += (targetX - currentX) * 0.15;
+    currentY += (targetY - currentY) * 0.15;
+
+    if (Math.abs(targetX - currentX) > 0.5 || Math.abs(targetY - currentY) > 0.5) {
+      raf = requestAnimationFrame(tick);
+    } else {
+      currentX = targetX;
+      currentY = targetY;
+      raf = null;
+    }
   }
 </script>
 
@@ -25,7 +45,7 @@
 
 <div
   class="pointer-ring"
-  style="transform: translateX({mouseX - 15}px) translateY({mouseY -
+  style="transform: translateX({currentX - 15}px) translateY({currentY -
     15}px) scale({scale})"
   style:opacity
 ></div>
