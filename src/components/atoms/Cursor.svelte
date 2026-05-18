@@ -27,7 +27,10 @@
     currentX += (targetX - currentX) * 0.15;
     currentY += (targetY - currentY) * 0.15;
 
-    if (Math.abs(targetX - currentX) > 0.5 || Math.abs(targetY - currentY) > 0.5) {
+    if (
+      Math.abs(targetX - currentX) > 0.5 ||
+      Math.abs(targetY - currentY) > 0.5
+    ) {
       raf = requestAnimationFrame(tick);
     } else {
       currentX = targetX;

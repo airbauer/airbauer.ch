@@ -2,11 +2,12 @@
   import HeroImage from "../../components/atoms/HeroImage.svelte";
   import Button from "../atoms/Button.svelte";
   import Socials from "../molecules/Socials.svelte";
+  import { smoothScrollTo } from "../../util/scroll";
 
   function handleClick(): void {
     const el = document.querySelector("#code");
     if (!el) return;
-    el.scrollIntoView({ behavior: "smooth", block: "start" });
+    smoothScrollTo(el as HTMLElement);
   }
 
   function handleKeyPress(event: KeyboardEvent): void {

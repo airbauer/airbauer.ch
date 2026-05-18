@@ -4,16 +4,18 @@
   export let isSelected: boolean;
 
   import { page } from "$app/stores";
+  import { smoothScrollTo } from "../../util/scroll";
+
   let currentPage = $page.url.pathname;
 
-  async function handleClick() {
+  function handleClick() {
     if (currentPage !== "/") {
       window.location.href = "/";
     }
 
     const el = document.querySelector(href);
     if (!el) return;
-    el.scrollIntoView(true);
+    smoothScrollTo(el as HTMLElement);
   }
 </script>
 
