@@ -85,7 +85,7 @@
       lanyard = new WebSocket("wss://api.lanyard.rest/socket");
       lanyard.onopen = () => console.log("Synced with Discord rich presence!");
 
-      lanyard.onmessage = (e) => {
+      lanyard.onmessage = e => {
         const json = JSON.parse(e.data);
         const opcode = json.op;
         const data = json.d;
@@ -104,7 +104,10 @@
         function tick() {
           if (!lanyard) return;
           if (isSpotify && data.spotify) musicProgress(data.spotify);
-          else if (isActivity && data.activities?.[activityNumber]?.timestamps?.start)
+          else if (
+            isActivity &&
+            data.activities?.[activityNumber]?.timestamps?.start
+          )
             elapsedTime(data.activities[activityNumber].timestamps.start);
           else if (!isActivity) localTime();
           currentRequestAnimationFrame = requestAnimationFrame(tick);
@@ -211,10 +214,17 @@
     loading="lazy"
   />
   {#if smallImage}
-    <img src={smallImage} alt="" class="small" aria-hidden="true" loading="lazy" />
+    <img
+      src={smallImage}
+      alt=""
+      class="small"
+      aria-hidden="true"
+      loading="lazy"
+    />
   {/if}
   <div>
     {#if isSpotify}
+      <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
       <a href={songLink} target="_blank" rel="noopener noreferrer">
         <Tooltip tip="Open Spotify">
           <h3>{activity}</h3>

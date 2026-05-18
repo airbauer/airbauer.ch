@@ -1,7 +1,7 @@
 <script lang="ts">
-  let mouseX: number;
-  let mouseY: number;
-  let opacity: number;
+  let mouseX = 0;
+  let mouseY = 0;
+  let opacity = 0;
   let scale = 1;
   let timeout: ReturnType<typeof setTimeout>;
 

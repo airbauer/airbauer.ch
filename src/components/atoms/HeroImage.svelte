@@ -6,8 +6,8 @@
   function enterRotate3D(e: MouseEvent) {
     zoom = true;
     let img = e.target as HTMLDivElement;
-    yRotation = 13 * ((e.offsetX - img.clientHeight / 2) / img.clientWidth);
-    xRotation = -13 * ((e.offsetY - img.clientWidth / 2) / img.clientHeight);
+    yRotation = 13 * ((e.offsetX - img.clientWidth / 2) / img.clientWidth);
+    xRotation = -13 * ((e.offsetY - img.clientHeight / 2) / img.clientHeight);
   }
 
   function leaveRotate3D() {

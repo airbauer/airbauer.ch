@@ -22,6 +22,14 @@
         {
           "key": "X-XSS-Protection",
           "value": "1; mode=block"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=31536000; includeSubDomains; preload"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.githubusercontent.com https://cdn.discordapp.com https://i.imgur.com; connect-src 'self' wss://api.lanyard.rest https://gh-pinned-repos-tsj7ta5xfhep.deno.dev https://*.vercel-insights.com; font-src 'self'; frame-ancestors 'none'; base-uri 'self'"
         }
       ]
     },

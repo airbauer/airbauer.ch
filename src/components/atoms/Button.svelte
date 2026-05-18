@@ -1,11 +1,12 @@
 <script lang="ts">
   export let side = false;
+  export let label = "Button";
 </script>
 
 <button
   type="button"
   class:button-with-side={side}
-  aria-label="Button"
+  aria-label={label}
   on:click
   on:keypress
 >

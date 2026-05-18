@@ -24,8 +24,11 @@
     <div class="socials">
       <Socials />
     </div>
-    <Button side on:click={handleClick} on:keypress={handleKeyPress}
-      >Discover my work ↓</Button
+    <Button
+      side
+      label="Discover my work ↓"
+      on:click={handleClick}
+      on:keypress={handleKeyPress}>Discover my work ↓</Button
     >
   </div>
   <HeroImage />
