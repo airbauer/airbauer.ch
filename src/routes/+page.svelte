@@ -8,7 +8,7 @@
 </script>
 
 <NavHost />
-<main>
+<main id="main-content">
   <Hero />
   <About />
   <Repos />

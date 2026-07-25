@@ -5,8 +5,10 @@
   import { user } from "../../util/discord";
   import type { Spotify } from "../../util/types";
 
+  export let heading = "Right now";
+
   let activity = `@${user.username}`,
-    details = "Fetching...",
+    details = "Connecting…",
     activityImage = "hellsing.gif",
     pulse = 30000,
     activityNumber = 0,
@@ -18,6 +20,7 @@
     progress: number,
     elapsed: string,
     spotifyTotal: number,
+    ready = false,
     currentSetInterval: ReturnType<typeof setInterval> | null = null,
     currentRequestAnimationFrame: number | null = null,
     heartbeatInterval: ReturnType<typeof setInterval> | null = null,
@@ -124,6 +127,7 @@
         }, pulse);
 
         if (opcode === 0) {
+          ready = true;
           isSpotify = data.listening_to_spotify;
           isActivity = !!data.activities?.[0];
 
@@ -204,50 +208,81 @@
   });
 </script>
 
-<h2>activity</h2>
-<div class="contain">
-  <img
-    src={activityImage}
-    alt={`${activity} - ${details || ""}`}
-    class="big"
-    class:spin={isSpotify}
-    loading="lazy"
-  />
-  {#if smallImage}
+<aside class="presence" aria-labelledby="activity-heading" aria-busy={!ready}>
+  <h2 id="activity-heading">{heading}</h2>
+  <div class="contain">
     <img
-      src={smallImage}
+      src={activityImage}
       alt=""
-      class="small"
-      aria-hidden="true"
+      class="big"
+      class:spin={isSpotify}
       loading="lazy"
     />
-  {/if}
-  <div>
-    {#if isSpotify}
-      <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
-      <a href={songLink} target="_blank" rel="noopener noreferrer">
-        <Tooltip tip="Open Spotify">
-          <h3>{activity}</h3>
-        </Tooltip>
-      </a>
-    {:else}
-      <h3>{activity}</h3>
+    {#if smallImage}
+      <img
+        src={smallImage}
+        alt=""
+        class="small"
+        aria-hidden="true"
+        loading="lazy"
+      />
     {/if}
-    <h5>{details || ""}</h5>
-    <h5>{state || ""}</h5>
-    {#if isSpotify}
-      <progress max="100" value={progress}></progress>
-    {:else if isActivity}
-      <h5>{elapsed}</h5>
-    {/if}
+    <div class="details">
+      {#if isSpotify}
+        <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
+        <a href={songLink} target="_blank" rel="noopener noreferrer">
+          <Tooltip tip="Open in Spotify">
+            <h3>{activity}</h3>
+          </Tooltip>
+        </a>
+      {:else}
+        <h3>{activity}</h3>
+      {/if}
+      <p class="meta">{details || ""}</p>
+      {#if state}
+        <p class="meta">{state}</p>
+      {/if}
+      {#if isSpotify}
+        <progress
+          max="100"
+          value={progress}
+          aria-label="Spotify track progress"
+        ></progress>
+      {:else if isActivity && elapsed}
+        <p class="meta">{elapsed}</p>
+      {/if}
+    </div>
   </div>
-</div>
+</aside>
 
 <style lang="scss">
+  .presence {
+    position: relative;
+  }
+
+  h2 {
+    margin-bottom: 1rem;
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+  }
+
   .contain {
     display: flex;
-    gap: 2.25rem;
+    gap: clamp(1.25rem, 3vw, 2.25rem);
     align-items: center;
+  }
+
+  .details {
+    min-width: 0;
+  }
+
+  .meta {
+    margin: 0.15rem 0 0;
+    color: var(--text-secondary);
+    font-family: var(--font-two);
+    font-size: 0.95rem;
+    font-weight: 300;
+    letter-spacing: -0.04em;
+    line-height: 1.45;
   }
 
   a,
@@ -258,19 +293,21 @@
     transition: 0.3s var(--bezier-one);
   }
 
-  h2 {
-    display: none;
-  }
-
   a:hover {
     text-decoration-color: var(--text-primary);
   }
 
+  h3 {
+    margin: 0;
+    font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+    line-height: 1.3;
+  }
+
   .big {
-    height: 135px;
-    width: 135px;
+    flex-shrink: 0;
+    height: clamp(96px, 22vw, 135px);
+    width: clamp(96px, 22vw, 135px);
     border-radius: 20px;
-    display: relative;
     user-select: none;
     transition: all 0.3s var(--bezier-one);
   }
@@ -291,18 +328,19 @@
     appearance: none;
     border: 0;
     border-radius: 10rem;
-    margin: 0;
-    margin-top: 0.6rem;
+    margin: 0.6rem 0 0;
     background-color: var(--elevation-one);
     height: 0.6rem;
+    width: 100%;
+    max-width: 16rem;
     overflow: hidden;
+    display: block;
 
     &::-webkit-progress-bar {
       background-color: var(--elevation-one);
       border-radius: 10rem;
     }
 
-    // dont ask me why these have to be duplicated because idk either
     &[value]::-webkit-progress-value {
       background-color: var(--accent);
       border-radius: 10rem;
@@ -329,26 +367,18 @@
   }
 
   @media screen and (max-width: 868px) {
-    h2 {
-      display: block;
-      margin-bottom: 1rem;
-    }
-    div {
-      justify-content: left;
-    }
-
-    .big {
-      height: 100px;
-      width: 100px;
-      border-radius: 17px;
-    }
-
-    .spin {
-      border-radius: 50%;
+    .contain {
+      align-items: flex-start;
     }
 
     .small {
       transform: translate(190%, 110%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .spin {
+      animation: none;
     }
   }
 </style>

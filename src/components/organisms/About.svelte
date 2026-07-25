@@ -2,12 +2,12 @@
   import { onMount, onDestroy } from "svelte";
   import RichPresence from "../molecules/RichPresence.svelte";
   import Tooltip from "../atoms/Tooltip.svelte";
+  import { about } from "$lib/content/site";
 
   function getAge(): string {
     const birthDate = new Date("2007/11/24");
     const ageMs = Date.now() - birthDate.getTime();
-    const preciseAge = (ageMs / 31536000000).toFixed(10);
-    return preciseAge;
+    return (ageMs / 31536000000).toFixed(10);
   }
 
   let age = getAge();
@@ -26,100 +26,112 @@
   });
 </script>
 
-<section id="about" class="wrapper">
-  <div>
-    <RichPresence />
+<section
+  id="about"
+  class="wrapper about"
+  aria-labelledby="about-heading"
+>
+  <div class="activity">
+    <RichPresence heading={about.activityHeading} />
   </div>
-  <div class="text">
-    <h2>bio</h2>
+
+  <article class="bio">
+    <h2 id="about-heading">{about.title}</h2>
+    <p class="intro">{about.intro}</p>
     <p>
-      Hey there, I'm Vik! :] I'm a <Tooltip tip={age}
-        ><span>{Math.floor(Number(age))}</span></Tooltip
-      >
-      year old programmer and gamer based in Germany 🇩🇪. I've taken programming seriously
-      since
-      <span>2019</span>, and have been doodling around with linux since
-      <span>2022</span>. Recently, however, I've grown a knack for FOSS/FLOSS. I
-      like contributing to
-      <Tooltip tip="🛠️">
+      I'm a <Tooltip tip={age}><span>{Math.floor(Number(age))}</span></Tooltip>
+      year-old developer from Germany. I've been writing code seriously since
+      <span>{about.programmingSince}</span>, running Linux since
+      <span>{about.linuxSince}</span>, and slowly shifting most of my workflow toward
+      FOSS. I contribute on
+      <Tooltip tip={about.links.forgejo.tip}>
         <a
-          href="https://codeberg.org/airbauer"
+          href={about.links.forgejo.href}
           target="_blank"
           rel="noopener noreferrer"
         >
-          <span>Forgejo/Codeberg</span>
+          <span>{about.links.forgejo.label}</span>
         </a>
       </Tooltip>
-      and if i need to i also use
-      <Tooltip tip="🚫">
+      first —
+      <Tooltip tip={about.links.github.tip}>
         <a
-          href="https://github.com/airbauer"
+          href={about.links.github.href}
           target="_blank"
           rel="noopener noreferrer"
         >
-          <span>Github</span>
+          <span>{about.links.github.label}</span>
         </a>
-      </Tooltip>.
+      </Tooltip>
+      is the fallback when upstream lives there.
     </p>
-  </div>
+  </article>
 </section>
 
 <style lang="scss">
   @use "../../styles/mixins.scss" as *;
 
-  section {
-    margin-bottom: 6rem;
+  .about {
+    margin-bottom: clamp(4.5rem, 8vh, 6rem);
     display: grid;
-    gap: 4.5rem;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
+    gap: clamp(2.5rem, 5vw, 4.5rem);
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    align-items: start;
   }
 
-  .text {
+  .bio {
     position: relative;
-    line-height: 1.75rem;
   }
 
-  span {
+  .bio::before {
+    @include outlineText(
+      $content: "vik",
+      $translateX: 88%,
+      $translateY: -2%,
+      $fontSize: clamp(180px, 28vw, 300px),
+      $opacity: 0.16
+    );
+  }
+
+  h2 {
+    margin-bottom: 0.85rem;
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+  }
+
+  .intro {
+    margin-bottom: 1rem;
+    font-size: clamp(1.05rem, 2vw, 1.15rem);
+    line-height: 1.65;
+    color: var(--text-primary);
+    font-weight: 400;
+  }
+
+  .bio p:last-child {
+    line-height: 1.75;
+  }
+
+  .bio span {
     font-weight: 400;
     font-family: var(--font-two);
     font-size: 0.9rem;
     background-color: var(--elevation-one);
     border-radius: 7px;
     color: var(--accent);
-    padding: 0.2rem 0.5rem 0.2rem;
+    padding: 0.2rem 0.5rem;
     width: fit-content;
   }
 
-  a {
+  .bio a {
     text-decoration: none;
   }
 
-  .text::before {
-    @include outlineText(
-      $content: "vik",
-      $translateX: 97%,
-      $translateY: -5%,
-      $fontSize: 300px,
-      $opacity: 0.22
-    );
-  }
-
-  h2 {
-    display: none;
-    margin-top: 1rem;
-  }
-
   @media (max-width: 868px) {
-    section {
-      display: flex;
-      flex-direction: column;
-      align-items: normal;
+    .about {
+      grid-template-columns: 1fr;
     }
 
-    h2 {
-      display: block;
-      margin-bottom: 1rem;
+    .bio::before {
+      opacity: 0.1;
     }
   }
 </style>

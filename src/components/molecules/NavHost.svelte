@@ -3,7 +3,7 @@
   let y: number;
 </script>
 
-<nav>
+<nav aria-label="Primary">
   <div class:scrolled={y > 20}>
     <ul>
       <Nav href="#home" section="/" isSelected={y < 350}>
